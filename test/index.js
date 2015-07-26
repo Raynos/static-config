@@ -2,9 +2,9 @@
 
 var test = require('tape');
 
-var staticConfig = require('../index.js');
+var StaticConfig = require('../index.js');
 
-test('staticConfig is a function', function t(assert) {
-    assert.equal(typeof staticConfig, 'function');
+test('StaticConfig is a function', function t(assert) {
+    assert.equal(typeof StaticConfig, 'function');
     assert.end();
 });

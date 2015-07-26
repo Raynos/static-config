@@ -85,8 +85,8 @@ function _initializeConfigValues() {
         }
     }
 
-    if (self.seedConfig) {
-        objects.push(self.seedConfig);
+    if (self._seedConfig) {
+        objects.push(self._seedConfig);
     }
 
     for (var j = 0; j < objects.length; j++) {
@@ -94,7 +94,7 @@ function _initializeConfigValues() {
         var keys = Object.keys(configObject);
 
         for (var k = 0; k < keys.length; k++) {
-            self._configValues[keys[k]] = configObject[k];
+            self._configValues[keys[k]] = configObject[keys[k]];
         }
     }
 };

@@ -9,6 +9,7 @@
 *.so
 *.node
 
+
 # Node Waf Byproducts #
 #######################
 .lock-wscript
@@ -62,3 +63,5 @@ coverage
 # All translation files #
 #########################
 static/translations-s3/
+
+.nyc_output

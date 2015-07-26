@@ -11,32 +11,31 @@
     "url": "https://github.com/Raynos/static-config/issues",
     "email": "raynos2@gmail.com"
   },
-  "contributors": [{
-    "name": "Raynos"
-  }],
-  "dependencies": {
-  },
+  "contributors": [
+    {
+      "name": "Raynos"
+    }
+  ],
+  "dependencies": {},
   "devDependencies": {
-    "coveralls": "^2.10.0",
-    "istanbul": "^0.3.5",
-    "lint-trap": "^1.0.0",
+    "nyc": "3.0.1",
     "opn": "^1.0.1",
-    "pre-commit": "0.0.11",
-    "tap-spec": "^2.1.1",
-    "tape": "^3.4.0"
+    "tape": "^4.0.1",
+    "uber-standard": "^4.0.1"
   },
-  "licenses": [{
-    "type": "MIT",
-    "url": "http://github.com/Raynos/static-config/raw/master/LICENSE"
-  }],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/Raynos/static-config/raw/master/LICENSE"
+    }
+  ],
   "scripts": {
-    "test": "npm run jshint -s && npm run cover -s",
-    "unit-test": "node test/index.js | tap-spec",
-    "jshint": "lint-trap .",
-    "cover": "istanbul cover --report html --print detail -- test/index.js && npm run check-cover -s",
-    "check-cover": "istanbul check-coverage --branches=100 --lines=100 --functions=100",
-    "view-cover": "opn ./coverage/index.html",
-    "travis": "npm run cover -s && istanbul report lcov && ((cat coverage/lcov.info | coveralls) || exit 0)"
+    "test": "npm run lint -s && npm run cover -s",
+    "lint": "standard -v --reporter stylish && echo '# linter passed'",
+    "cover": "npm run test-cover -s && npm run check-cover -s",
+    "test-cover": "nyc --reporter html --reporter text node test/index.js",
+    "check-cover": "nyc check-coverage --branches=100 --lines=100 --functions=100",
+    "view-cover": "opn ./coverage/index.html"
   },
   "engine": {
     "node": ">= 0.8.x"

@@ -1,36 +1,61 @@
 # static-config
 
-<!--
-    [![build status][build-png]][build]
-    [![Coverage Status][cover-png]][cover]
-    [![Davis Dependency status][dep-png]][dep]
--->
-
-<!-- [![NPM][npm-png]][npm] -->
-
 Config loader for static application configuration
 
-## Example
+## Motivation
+
+The static configuration for your application should come from
+only a few places:
+
+ - Files checked into git
+ - Configuration values passed in from the command line
+ - A configuration object created in your tests for test overwrites
+
+The first two are used in production, the last one is necessary
+to sanely integrate with tests.
+
+Here is an example of how you might configure your application
 
 ```js
-var staticConfig = require("static-config");
+// server.js
+var StaticConfig = require('static-config');
+var parseArgs = require('minimist');
+var fs = require('fs');
+var path = require('path');
 
-// TODO. Show example
+var MyApplication = require('./app.js');
+
+if (require.main === module) {
+    main(parseArgs(process.argv.slice(2)));
+}
+
+function main(argv) {
+    var configFolder = path.join(__dirname, 'config');
+    var environment = argv.env || 'local';
+    var dc = fs.statFileSync('/etc/datacenter') ?
+        fs.readFileSync('/etc/datacenter') : 'no-dc';
+
+    var config = StaticConfig({
+        files: [
+            path.join(configFolder, 'production.json'),
+            path.join(configFolder, environment + '.json'),
+            path.join(configFolder, dc + '.json'),
+            path.join(configFolder, 'secrets', 'secrets.json')
+        ],
+        seedConfig: null
+    });
+
+    config.set('argv.port', argv.port);
+    config.freeze();
+
+    var app = MyApplication(config, {
+        /* ... */
+    });
+
+    app.bootstrap();
+}
 ```
 
-## Docs
-
-### `var someValue = staticConfig(/*arguments*/)`
-
-<!--
-  This is a jsig notation of your interface.
-  https://github.com/Raynos/jsig
--->
-```ocaml
-static-config := (arg: Any) => void
-```
-
-// TODO. State what the module does.
 
 ## Installation
 

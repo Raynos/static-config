@@ -112,7 +112,7 @@ function _initializeConfigValues() {
 };
 
 StaticConfig.prototype._parseFile = function _parseFile(fileName) {
-    var result = safeSyncRead();
+    var result = safeSyncRead(fileName);
     if (result.error) {
         return null;
     }

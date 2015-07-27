@@ -61,6 +61,18 @@ StaticConfig.prototype.freeze = function freeze() {
     return null;
 };
 
+StaticConfig.prototype.inspect = function inspect() {
+    var self = this;
+    var clone = {};
+
+    var keys = Object.keys(self._configValues);
+    for (var i = 0; i < keys.length; i++) {
+        clone[keys[i]] = self._configValues[keys[i]];
+    }
+
+    return clone;
+};
+
 StaticConfig.prototype.destroy = function destroy() {
     var self = this;
 

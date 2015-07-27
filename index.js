@@ -27,11 +27,11 @@ function StaticConfig(options) {
 StaticConfig.prototype.get = function get(key) {
     var self = this;
 
+    if (self._destroyed) {
+        throw new Error('Cannot get(' + key + ') because destroyed');
+    }
     if (!(key in self._configValues)) {
         throw new Error('Key not available: ' + key);
-    }
-    if (self._destroyed) {
-        throw new Error('Cannot get() because destroyed: ' + key);
     }
 
     return self._configValues[key];
@@ -41,11 +41,11 @@ StaticConfig.prototype.set = function set(key, value) {
     var self = this;
 
     assert(typeof key === 'string', 'key must be a string: ' + key);
-    if (key in self._configValues) {
-        throw new Error('Key already exists: ' + key);
-    }
     if (self._frozen) {
         throw new Error('Cannot set(' + key + ') because frozen');
+    }
+    if (key in self._configValues) {
+        throw new Error('Key already exists: ' + key);
     }
 
     self._configValues[key] = value;

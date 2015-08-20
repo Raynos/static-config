@@ -118,12 +118,7 @@ StaticConfig.prototype._parseFile = function _parseFile(fileName) {
     }
     var fileContents = result.fileContents;
 
-    result = safeJSONParse(fileContents);
-    if (result.error) {
-        return null;
-    }
-
-    return result.json;
+    return JSON.parse(fileContents);
 };
 
 function safeSyncRead(filePath) {
@@ -139,22 +134,6 @@ function safeSyncRead(filePath) {
 
     return {
         fileContents: fileContents,
-        error: error
-    };
-}
-
-function safeJSONParse(text) {
-    var json;
-    var error;
-
-    try {
-        json = JSON.parse(text);
-    } catch (err) {
-        error = err;
-    }
-
-    return {
-        json: json,
         error: error
     };
 }

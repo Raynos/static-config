@@ -199,7 +199,7 @@ test('is resilient to non-existant files', function t(assert) {
     assert.end();
 });
 
-test('is resilient to invalid json', FixturesFs(__dirname, {
+test('throws for invalid json', FixturesFs(__dirname, {
     'config': {
         'production.json': JSON.stringify({
             'a': 'b',
@@ -208,15 +208,14 @@ test('is resilient to invalid json', FixturesFs(__dirname, {
         'local.json': '{...}'
     }
 }, function t(assert) {
-    var config = StaticConfig({
-        files: [
-            path.join(__dirname, 'config', 'production.json'),
-            path.join(__dirname, 'config', 'local.json')
-        ]
-    });
-
-    assert.equal(config.get('a'), 'b');
-    assert.equal(config.get('a.b.c'), 'v');
+    assert.throws(function throwIt() {
+        StaticConfig({
+            files: [
+                path.join(__dirname, 'config', 'production.json'),
+                path.join(__dirname, 'config', 'local.json')
+            ]
+        });
+    }, /Unexpected token ./);
 
     assert.end();
 }));

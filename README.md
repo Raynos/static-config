@@ -32,14 +32,14 @@ if (require.main === module) {
 function main(argv) {
     var configFolder = path.join(__dirname, 'config');
     var environment = argv.env || 'local';
-    var dc = fs.statFileSync('/etc/datacenter') ?
+    var dc = fs.existsSync('/etc/datacenter') ?
         fs.readFileSync('/etc/datacenter') : 'no-dc';
 
     var config = StaticConfig({
         files: [
             path.join(configFolder, 'production.json'),
             path.join(configFolder, environment + '.json'),
-            path.join(configFolder, dc + '.json'),
+            path.join(configFolder, environment + '-' + dc + '.json'),
             path.join(configFolder, 'secrets', 'secrets.json')
         ],
         seedConfig: null

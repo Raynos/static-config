@@ -134,16 +134,16 @@ function createStats(opts) {
 }
 
 function safeSyncRead(filePath) {
-    /*eslint no-try-catch: [0]*/
-    /*eslint no-restricted-syntax: 0*/
     var fileContents;
     var error;
 
+    /*eslint-disable no-restricted-syntax */
     try {
         fileContents = fs.readFileSync(filePath, 'utf8');
     } catch (err) {
         error = err;
     }
+    /*eslint-enable no-restricted-syntax */
 
     return {
         fileContents: fileContents,

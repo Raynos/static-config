@@ -22,11 +22,11 @@
   "devDependencies": {
     "eslint": "1.8.0",
     "eslint-config-perf-standard": "2.0.0",
+    "eslint-plugin-perf-standard": "1.0.1",
     "fixtures-fs": "2.0.0",
     "nyc": "3.0.1",
     "opn": "^1.0.1",
-    "tape": "^4.0.1",
-    "uber-standard": "^4.0.1"
+    "tape": "^4.0.1"
   },
   "licenses": [
     {

@@ -1,6 +1,6 @@
 {
   "name": "static-config",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Config loader for static application configuration",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",

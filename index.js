@@ -4,18 +4,16 @@ var assert = require('assert');
 var fs = require('fs');
 
 function StaticConfig(options) {
-    var self = this;
-
     assert(options && options.files, 'must pass in options.files');
 
-    self._seedConfig = options.seedConfig;
-    self._files = options.files;
-    self._configValues = Object.create(null);
+    this._seedConfig = options.seedConfig;
+    this._files = options.files;
+    this._configValues = Object.create(null);
 
-    self._frozen = false;
-    self._destroyed = false;
+    this._frozen = false;
+    this._destroyed = false;
 
-    self._initializeConfigValues();
+    this._initializeConfigValues();
 }
 
 StaticConfig.prototype.get = function get(key) {

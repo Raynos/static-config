@@ -3,25 +3,17 @@
 var assert = require('assert');
 var fs = require('fs');
 
-module.exports = StaticConfig;
-
 function StaticConfig(options) {
-    if (!(this instanceof StaticConfig)) {
-        return new StaticConfig(options);
-    }
-
-    var self = this;
-
     assert(options && options.files, 'must pass in options.files');
 
-    self._seedConfig = options.seedConfig;
-    self._files = options.files;
-    self._configValues = Object.create(null);
+    this._seedConfig = options.seedConfig;
+    this._files = options.files;
+    this._configValues = Object.create(null);
 
-    self._frozen = false;
-    self._destroyed = false;
+    this._frozen = false;
+    this._destroyed = false;
 
-    self._initializeConfigValues();
+    this._initializeConfigValues();
 }
 
 StaticConfig.prototype.get = function get(key) {
@@ -87,6 +79,13 @@ StaticConfig.prototype._initializeConfigValues =
 function _initializeConfigValues() {
     var self = this;
 
+    var objects = self._collectConfigObjects();
+    self._assignConfigValues(objects);
+};
+
+StaticConfig.prototype._collectConfigObjects =
+function _collectConfigObjects() {
+    var self = this;
     var objects = [];
 
     for (var i = 0; i < self._files.length; i++) {
@@ -100,6 +99,13 @@ function _initializeConfigValues() {
     if (self._seedConfig) {
         objects.push(self._seedConfig);
     }
+
+    return objects;
+};
+
+StaticConfig.prototype._assignConfigValues =
+function _assignConfigValues(objects) {
+    var self = this;
 
     for (var j = 0; j < objects.length; j++) {
         var configObject = objects[j];
@@ -121,16 +127,23 @@ StaticConfig.prototype._parseFile = function _parseFile(fileName) {
     return JSON.parse(fileContents);
 };
 
+module.exports = createStats;
+
+function createStats(opts) {
+    return new StaticConfig(opts);
+}
+
 function safeSyncRead(filePath) {
-    /* eslint no-try-catch: [0]*/
     var fileContents;
     var error;
 
+    /*eslint-disable no-restricted-syntax */
     try {
         fileContents = fs.readFileSync(filePath, 'utf8');
     } catch (err) {
         error = err;
     }
+    /*eslint-enable no-restricted-syntax */
 
     return {
         fileContents: fileContents,

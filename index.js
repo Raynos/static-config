@@ -3,13 +3,7 @@
 var assert = require('assert');
 var fs = require('fs');
 
-module.exports = StaticConfig;
-
 function StaticConfig(options) {
-    if (!(this instanceof StaticConfig)) {
-        return new StaticConfig(options);
-    }
-
     var self = this;
 
     assert(options && options.files, 'must pass in options.files');
@@ -120,6 +114,12 @@ StaticConfig.prototype._parseFile = function _parseFile(fileName) {
 
     return JSON.parse(fileContents);
 };
+
+module.exports = createStats;
+
+function createStats(opts) {
+    return new StaticConfig(opts);
+}
 
 function safeSyncRead(filePath) {
     /*eslint no-try-catch: [0]*/

@@ -16,8 +16,12 @@
       "name": "Raynos"
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "eslint": "1.8.0"
+  },
   "devDependencies": {
+    "eslint": "1.8.0",
+    "eslint-config-perf-standard": "2.0.0",
     "fixtures-fs": "2.0.0",
     "nyc": "3.0.1",
     "opn": "^1.0.1",
@@ -32,7 +36,7 @@
   ],
   "scripts": {
     "test": "npm run lint -s && npm run cover -s",
-    "lint": "standard -v --reporter stylish && echo '# linter passed'",
+    "lint": "eslint $(git ls-files | grep '.js$') && echo '# linter passed'",
     "cover": "npm run test-cover -s && npm run check-cover -s",
     "test-cover": "nyc --reporter html --reporter text node test/index.js",
     "check-cover": "nyc check-coverage --branches=100 --lines=100 --functions=100",

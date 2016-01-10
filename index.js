@@ -122,7 +122,8 @@ StaticConfig.prototype._parseFile = function _parseFile(fileName) {
 };
 
 function safeSyncRead(filePath) {
-    /* eslint no-try-catch: [0]*/
+    /*eslint no-try-catch: [0]*/
+    /*eslint no-restricted-syntax: 0*/
     var fileContents;
     var error;
 

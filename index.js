@@ -79,6 +79,13 @@ StaticConfig.prototype._initializeConfigValues =
 function _initializeConfigValues() {
     var self = this;
 
+    var objects = self._collectConfigObjects();
+    self._assignConfigValues(objects);
+};
+
+StaticConfig.prototype._collectConfigObjects =
+function _collectConfigObjects() {
+    var self = this;
     var objects = [];
 
     for (var i = 0; i < self._files.length; i++) {
@@ -92,6 +99,13 @@ function _initializeConfigValues() {
     if (self._seedConfig) {
         objects.push(self._seedConfig);
     }
+
+    return objects;
+};
+
+StaticConfig.prototype._assignConfigValues =
+function _assignConfigValues(objects) {
+    var self = this;
 
     for (var j = 0; j < objects.length; j++) {
         var configObject = objects[j];
